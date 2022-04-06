@@ -1,7 +1,7 @@
 import json
 import re
 
-import architectures
+from discovery import architectures
 from .Repository import Repository
 
 ######################################################################

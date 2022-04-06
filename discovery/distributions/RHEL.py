@@ -1,4 +1,4 @@
-import repos
+from discovery import repos
 from .CentOS import CentOS
 
 ########################################################################

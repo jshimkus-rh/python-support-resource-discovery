@@ -7,7 +7,7 @@ import subprocess
 import yaml
 
 from mill import defaults, factory
-import architectures
+from discovery import architectures
 
 log = logging.getLogger(__name__)
 

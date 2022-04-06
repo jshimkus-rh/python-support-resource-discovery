@@ -3,7 +3,7 @@ from __future__ import print_function
 import argparse
 
 from mill import command
-import architectures
+from discovery import architectures
 from .Distribution import Distribution, DistributionUnknownCombinationException
 
 ########################################################################

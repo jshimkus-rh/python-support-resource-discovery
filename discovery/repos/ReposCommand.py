@@ -4,7 +4,7 @@ import argparse
 import yaml
 
 from mill import command
-import architectures
+from discovery import architectures
 from .Repository import Repository
 
 ########################################################################
