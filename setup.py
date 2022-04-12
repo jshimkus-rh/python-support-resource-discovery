@@ -37,7 +37,7 @@ console_scripts = ["{0} = {1}.{2}:{3}".format(versioned(subpackage["entry"]),
 setup = functools.partial(
           setuptools.setup,
           name = python_prefixed(package_name),
-          version = "1.0.1",
+          version = "1.0.2",
           description = python_prefixed(package_name),
           author = "Joe Shimkus",
           author_email = "jshimkus@redhat.com",

@@ -24,11 +24,11 @@ class RHEL(CentOS):
   @property
   def tags(self):
     tags = super(RHEL, self).tags
-    if ((self.majorVersion > 7)
-        or ((self.majorVersion == 7) and (self.minorVersion > 5))):
-      tags = "{0}{1}".format(
-                "" if tags is None else "{0} ".format(tags),
-                "RTT_ACCEPTED" if self._accepted else "RTT_PASSED")
+    if (((self.majorVersion > 7)
+          or ((self.majorVersion == 7) and (self.minorVersion > 5)))
+        and self._released):
+      tags = "{0}{1}".format("" if tags is None else "{0} ".format(tags),
+                             "RELEASED")
     return tags
 
   ####################################################################
@@ -45,9 +45,10 @@ class RHEL(CentOS):
   # Protected methods
   ####################################################################
   @property
-  def _accepted(self):
-    return ("/nightly-rhel-{0}".format(self.majorVersion)
-            not in self.repoRoot)
+  def _released(self):
+    return ("/released/RHEL-{0}/{0}.{1}".format(self.majorVersion,
+                                                self.minorVersion)
+            in self.repoRoot)
 
   ####################################################################
   # Private methods
