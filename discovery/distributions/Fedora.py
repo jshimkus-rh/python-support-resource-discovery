@@ -30,6 +30,11 @@ class Fedora(Distribution):
     return "Fedora"
 
   ####################################################################
+  @property
+  def _repoRootReleasedIndicator(self):
+    return "releases"
+
+  ####################################################################
   # Protected methods
   ####################################################################
 

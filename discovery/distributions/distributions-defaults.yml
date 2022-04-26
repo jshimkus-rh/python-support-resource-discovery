@@ -6,10 +6,12 @@ defaults:
   #
   # If the specified version is earlier than the minimum version specified in
   # the matching OS family or is otherwise unavailable ((based on web search)
-  # distributions will utilize the most recent available family version.  If no
-  # such version is available (again, based on web search) distributions will
-  # utilize the most recent available Fedora version at least as recent as the
-  # Fedora minimum.
+  # distributions will utilize the most recent available released family
+  # version or, if no released version is available, the most recent available
+  # family version.
+  # If no such family version is available (again, based on web search)
+  # distributions will utilize the Fedora version found using the same matching
+  # criteria that is at least as recent as the Fedora minimum.
   #
   # Due to current requirements that the bunsen infrastructure machine may be
   # required to function as an iscsi server and the default distribution is

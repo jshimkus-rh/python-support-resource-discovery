@@ -173,6 +173,11 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
 
   ####################################################################
   @property
+  def released(self):
+    return self._repoRootReleasedIndicator in self.repoRoot
+
+  ####################################################################
+  @property
   def repoRoot(self):
     return self._repoRoot
 
@@ -238,7 +243,8 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
     from . import Fedora
 
     defaultDistribution = cls.defaults(["distribution"])
-    family = cls.defaults(["family"], defaultDistribution).lower()
+    family = cls.defaults(["family"], defaultDistribution)
+    family = "fedora" if family is None else family.lower()
     major = cls.defaults(["major"], defaultDistribution)
     minor = (None if family == "fedora"
                   else cls.defaults(["minor"], defaultDistribution))
@@ -249,21 +255,32 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
 
     if defaultChoice not in cls.choices():
       # The specified distribution was not available.
-      # Use the most recent member of the specified family.
+      # Use the most recent released member of the specified family or, if
+      # not available, the most recent member of the specified family.
       defaultChoice = None
 
       instances = [cls.makeItem(choice) for choice in cls.choices()]
       familyInstances = dict([(float(instance.versionNumber), instance)
                               for instance in instances
                                 if instance.versionName == family])
-      if len(familyInstances) > 0:
+      releasedInstances = dict(filter(lambda x: x[1].released,
+                                      familyInstances.items()))
+      if len(releasedInstances) > 0:
+        defaultChoice = releasedInstances[max(releasedInstances)].name()
+      elif len(familyInstances) > 0:
         defaultChoice = familyInstances[max(familyInstances)].name()
-      else:
-        # Use the most recent available Fedora.
+
+      if defaultChoice is None:
+        # Use the most recent released Fedora or, if not available, the most
+        # recent Fedora.
         fedoraInstances = dict([(float(instance.versionNumber), instance)
                                 for instance in instances
                                   if isinstance(instance, Fedora)])
-        if len(fedoraInstances) > 0:
+        releasedInstances = dict(filter(lambda x: x[1].released,
+                                        fedoraInstances.items()))
+        if len(releasedInstances) > 0:
+          defaultChoice = releasedInstances[max(releasedInstances)].name()
+        elif len(fedoraInstances) > 0:
           defaultChoice = fedoraInstances[max(fedoraInstances)].name()
 
       if defaultChoice is None:
@@ -540,6 +557,11 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
   @property
   def _familyPrefix(self):
     raise NotImplementedError
+
+  ####################################################################
+  @property
+  def _repoRootReleasedIndicator(self):
+    return "released"
 
   ####################################################################
   # Private factory-behavior methods
