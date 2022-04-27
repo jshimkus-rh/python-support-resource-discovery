@@ -14,6 +14,10 @@ subpackages = [{"name": "architectures", "entry": "arches"},
                {"name": "repos", "entry": "repos"}]
 config_file_name = "config.yml"
 
+def readFile(path):
+  with open(path) as f:
+    return f.read()
+
 def prefixed(src):
   if ("bdist_wheel" not in sys.argv) or ("--universal" not in sys.argv):
     src = python_prefixed(src)
@@ -37,7 +41,7 @@ console_scripts = ["{0} = {1}.{2}:{3}".format(versioned(subpackage["entry"]),
 setup = functools.partial(
           setuptools.setup,
           name = python_prefixed(package_name),
-          version = "1.0.3",
+          version = "1.0.4",
           description = python_prefixed(package_name),
           author = "Joe Shimkus",
           author_email = "jshimkus@redhat.com",
@@ -47,7 +51,11 @@ setup = functools.partial(
           },
           install_requires = ["{0} >= 1.0.0"
                                 .format(python_prefixed("utility-mill"))],
-          zip_safe = False
+          zip_safe = False,
+          classifiers = [
+            "License :: OSI Approved :: GNU General Public License v2 (GPLv2)"
+          ],
+          license = readFile(os.path.join(package_prefix, "LICENSE.txt"))
         )
 
 package_data = {}

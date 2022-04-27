@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright Red Hat
+#
 import os
 
 from mill import defaults, factory

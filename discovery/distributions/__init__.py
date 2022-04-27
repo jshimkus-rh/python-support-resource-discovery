@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright Red Hat
+#
 from __future__ import print_function
 
 from .CentOS import CentOS

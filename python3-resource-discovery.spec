@@ -2,8 +2,8 @@
 %define repo_branch main
 
 %define name python3-%{repo_name}
-%define version 1.0.3
-%define unmangled_version 1.0.3
+%define version 1.0.4
+%define unmangled_version 1.0.4
 %define release 1
 
 Summary: %{name}
@@ -12,7 +12,7 @@ Version: %{version}
 Release: %{release}
 URL: https://gitlab.cee.redhat.com/vdo/open-sourcing/python/support/%{repo_name}
 Source0: %{url}/-/archive/%{repo_branch}/%{repo_name}-%{repo_branch}.tar.gz
-License: UNKNOWN
+License: GPLv2
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Prefix: %{_prefix}

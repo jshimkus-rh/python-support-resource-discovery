@@ -1,3 +1,8 @@
+#
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright Red Hat
+#
 from .CentOS import CentOS
 from .Fedora import Fedora
 from .ReposCommand import ReposCommand
