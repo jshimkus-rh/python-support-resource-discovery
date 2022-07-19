@@ -289,6 +289,10 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
             break
           log.debug("response status {0} on iteration {1}"
                       .format(response.status, iteration))
+          if (iteration < (retries - 1)):
+            sleep = min(5, 1 << iteration)
+            log.debug("sleeping {0} second(s) before retrying".format(sleep))
+            time.sleep(sleep)
         except (socket.gaierror, socket.timeout):
           log.debug("socket error on iteration {0}".format(iteration))
       else: # for
