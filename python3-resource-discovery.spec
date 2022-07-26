@@ -2,8 +2,8 @@
 %define repo_branch main
 
 %define name python3-%{repo_name}
-%define version 1.0.5
-%define unmangled_version 1.0.5
+%define version 1.0.6
+%define unmangled_version 1.0.6
 %define release 1
 
 Summary: %{name}
@@ -18,12 +18,20 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Prefix: %{_prefix}
 BuildArch: noarch
 
-# Build dependencies
+%if 0%{?rhel} && 0%{?rhel} < 9
+BuildRequires: python39
+BuildRequires: python39-pyyaml
+BuildRequires: python39-setuptools
+Requires: python39
+Requires: python39-pyyaml
+%else
 BuildRequires: python3
 BuildRequires: python3-pyyaml
-BuildRequires: python-setuptools
+BuildRequires: python3-setuptools
+Requires: python3
+Requires: python3-pyyaml
+%endif
 
-# Runtime dependencies
 Requires: python3-utility-mill >= 1
 
 %description
@@ -43,3 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f INSTALLED_FILES
 %defattr(-,root,root)
+
+%changelog
+* Tue Jul 26 2022 Joe Shimkus <jshimkush@redhat.com> - 1.0.6-1
+- Make functional rpm for RHEL earlier than 9.0.
