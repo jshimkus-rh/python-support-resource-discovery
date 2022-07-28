@@ -1,0 +1,91 @@
+---
+# This file specifies the defaults that repos will utilize.
+#
+# The defaults are organized by distribution name and within each distribution
+# are specified hosts to query and initial paths on said hosts where the
+# discovery of available repos begins.
+#
+# Fedora specifies an archive host as older distributions are moved there.
+# Repository discovery will recognize this based on the residual file left in
+# the release area indicating the distribution has been moved and not by
+# querying the archive host directlyZ  The net effect of this is that Fedora
+# requires a release host in order to discover any repository even those
+# that have been archived.
+#
+# The paths are interpreted as follows:
+#     released: released distribution
+#     latest:   on the path to being released
+#     nightly:  the most recently generated distribution
+#
+# In discovering repositories if there is no nightly path specified
+# the latest path will be used.  If there is no latest path specified the
+# released path will be used.  If there is no released path specified no
+# release repositories will be discovered.
+#
+# To support the tooling which consumes the result of repository discovery
+# the returned results are aggregated using set semantics in the following
+# manner:
+#     released: nightly << latest << released
+#     latest:   nightly << released << latest
+#     nightly:  released << latest << nightly
+#
+# The result of this aggregation is that each set contains the discovered
+# repositories that most closely match the above described path interpretations.
+defaults:
+  # Repos are discovered dynamically and can be a relatively lengthy process.
+  # Rather than perform discovery every time repos is used it caches the
+  # discovered repos to speed up subsequent uses.  The following defaults allow
+  # customization of the cache.
+  cache:
+    directories:
+      # The path to the directory in which to cache the repo info.
+      # Must specify a full-path; use of ~ for user's home is supported.
+      # DEFAULT: $HOME.
+      root:
+      # The sub-directory of root to use for the cache.
+      # DEFAULT:.python-repos-cache
+      subdirectory:
+
+    # How frequently to refresh the cache.
+    # Format is <days>-<hours>-<minutes>
+    # Each field is an arbitrary integer; e.g., one day could be specified
+    # as 24 hours.
+    # Fields are interpreted right-to-left.  That is...
+    #  a single number is interpreted as minutes
+    #  h-m is interpreted as h hours and m minutes
+    #  d-h-m is interpreted as d days, h hours and m minutes
+    # DEFAULT: one day; i.e., 1-0-0
+    # A minimum of 1 minute is imposed.
+    refresh:
+
+  # The defaults for CentOS repo discovery.
+  centos:
+    hosts:
+      released:
+
+    paths:
+      latest:
+      nightly:
+      released:
+
+  # The defaults for Fedora repo discovery.
+  fedora:
+    hosts:
+      released: dl.fedoraproject.org
+      archived: archives.fedoraproject.org
+
+    paths:
+      latest: /development
+      nightly:
+      released: /releases
+
+  # The defaults for RHEL repo discovery.
+  rhel:
+    hosts:
+      released:
+
+    paths:
+      latest:
+      nightly:
+      released:
+

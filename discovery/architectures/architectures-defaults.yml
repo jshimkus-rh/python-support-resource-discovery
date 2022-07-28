@@ -1,0 +1,5 @@
+---
+# This file specifies the defaults that architectures will utilize.
+defaults:
+  # The default architecture to use (case-insensitive).
+  architecture: x86_64

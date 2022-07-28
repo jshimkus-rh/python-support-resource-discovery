@@ -1,0 +1,69 @@
+---
+# This file specifies the defaults that distributions will utilize.
+defaults:
+  # The default distribution to use.
+  # Note that for Fedora the minor version is not used.
+  #
+  # If the specified version is earlier than the minimum version specified in
+  # the matching OS family or is otherwise unavailable ((based on web search)
+  # distributions will utilize the most recent available family version.  If no
+  # such version is available (again, based on web search) distributions will
+  # utilize the most recent available Fedora version at least as recent as the
+  # Fedora minimum.
+  #
+  # Due to current requirements that the bunsen infrastructure machine may be
+  # required to function as an iscsi server and the default distribution is
+  # used for the infrastructure machine this must be specified as Fedora 30.
+  # It is the only currently tested distribution for which the bunsen
+  # configuration of an iscsi server is verified to work.
+  distribution:
+    family: fedora
+    major: 30
+    minor:
+
+  # The "minimum" in each OS family specifies the earliest version of the OS
+  # family that is supported.  Note that for Fedora there is no minor version.
+
+  # CentOS/RHEL defaults
+  # "specialRepos" are used to specify repositories for packages that are not
+  # provided by the distributions but are required for development/testing.
+  # The first level labels under "specialRepos" are treated as regular
+  # expressions simplifying the processing code's disambiguation of
+  # distributions with common prefixes; e.g., fedora32 and fedora320.
+  centos:
+    minimum:
+      major: 8
+      minor: 3
+    bootOptions:
+      default: ""
+    kickStart:
+      default: ""
+    specialRepos:
+      default: fedora34
+      centos8\d$:
+        default: fedora28
+
+  # Fedora defaults
+  fedora:
+    minimum:
+      major: 28
+    bootOptions:
+      default: ""
+    kickStart:
+      default: ""
+
+  # RHEL defaults
+  rhel:
+    minimum:
+      major: 7
+      minor: 5
+    bootOptions:
+      default: ""
+    kickStart:
+      default: ""
+    specialRepos:
+      default: fedora34
+      rhel8\d$:
+        default: fedora28
+      rhel7\d$:
+        default: fedora28

@@ -1,0 +1,27 @@
+stages:
+    - build
+
+build-resource-discovery:
+    # Only run on the main branch.
+    only:
+      - main
+
+    stage: build
+
+    variables:
+        REPO_DIR_NAME: "python-resource-discovery"
+        REPO_SERVER_PIP_ROOT: $SERVER_PIP_ROOT_PATH$SERVER_PIP_SUB_PATH
+
+    script:
+        # Get pip.
+        - wget -O get-pip.py https://bootstrap.pypa.io/get-pip.py
+        - python3 get-pip.py
+        # Build universal python wheel.
+        - python3 setup.py bdist_wheel --universal
+        # Copy the wheel to the server.
+        - chmod og= $ID_RSA
+        - (cd dist && scp -i $ID_RSA -o "StrictHostKeyChecking=no"
+            -o "UserKnownHostsFile=/dev/null" *.whl
+            $SERVER_USER@$SERVER_IP$REPO_SERVER_PIP_ROOT/$REPO_DIR_NAME)
+    tags:
+        - pbitlab

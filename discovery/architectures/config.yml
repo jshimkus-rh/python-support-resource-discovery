@@ -1,0 +1,18 @@
+---
+# The contents of a Config file are formatted in the same way as that of a
+# Defaults file with the change that the top-level key must be 'config'.
+
+# This file's parameters are utilized both at package (setuptools) creation and
+# runtime.  At present the contents are only related to defaults files, if
+# used.
+config:
+  defaults:
+    # If no name is specified the package does not have a defaults file.
+    # If specified it is the name of the file in the package source directory.
+    name: architectures-defaults.yml
+
+    # If no install-dir is specified the defaults file (if used) is installed
+    # as package data.
+    # If it is specified it is the full path to the directory in which it
+    # is installed.
+    install-dir: /etc/permabit/python/support
