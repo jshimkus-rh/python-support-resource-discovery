@@ -10,8 +10,8 @@ Summary: %{name}
 Name: %{name}
 Version: %{version}
 Release: %{release}
-URL: https://gitlab.cee.redhat.com/vdo/open-sourcing/python/support/%{repo_name}
-Source0: %{url}/-/archive/%{repo_branch}/%{repo_name}-%{repo_branch}.tar.gz
+URL:     https://github.com/dm-vdo/python-support-resource-discovery
+Source0: %{url}/archive/refs/heads/main.tar.gz
 License: GPLv2
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -38,7 +38,7 @@ Requires: python3-utility-mill >= 1
 UNKNOWN
 
 %prep
-%setup -n %{repo_name}-%{repo_branch}
+%setup -n python-support-resource-discovery-%{repo_branch}
 
 %build
 python3 setup.py build
