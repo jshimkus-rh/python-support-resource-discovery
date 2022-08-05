@@ -18,6 +18,7 @@ else:
 
 import argparse
 import errno
+import fcntl
 import functools
 import itertools
 import json
@@ -483,14 +484,15 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
         raise
     try:
       fd = os.open(os.path.sep.join([self.__privateDirPath(), name]),
-                   os.O_CREAT | os.O_RDWR | os.O_EXCL, 0o640)
+                   os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o640)
     except OSError as ex:
       if ex.errno != errno.EEXIST:
         raise
       fd = os.open(os.path.sep.join([self.__privateDirPath(), name]),
-                   os.O_RDWR | os.O_EXCL, 0o640)
+                   os.O_RDWR, 0o640)
     try:
       openFile = os.fdopen(fd, "r+")
+      fcntl.flock(openFile, fcntl.LOCK_EX)
     except:
       os.close(fd)
     return openFile
