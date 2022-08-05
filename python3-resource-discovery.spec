@@ -2,8 +2,8 @@
 %define repo_branch main
 
 %define name python3-%{repo_name}
-%define version 1.0.6
-%define unmangled_version 1.0.6
+%define version 1.0.7
+%define unmangled_version 1.0.7
 %define release 1
 
 Summary: %{name}
@@ -55,3 +55,6 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Tue Jul 26 2022 Joe Shimkus <jshimkush@redhat.com> - 1.0.6-1
 - Make functional rpm for RHEL earlier than 9.0.
+
+* Wed Aug 03 2022 Joe Shimkus <jshimkush@redhat.com> - 1.0.7-1
+- Correct exclusive locking of cache files.
