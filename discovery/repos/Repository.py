@@ -492,9 +492,16 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
                    os.O_RDWR, 0o640)
     try:
       openFile = os.fdopen(fd, "r+")
-      fcntl.flock(openFile, fcntl.LOCK_EX)
     except:
       os.close(fd)
+      raise
+
+    try:
+      fcntl.flock(openFile, fcntl.LOCK_EX)
+    except:
+      openFile.close()
+      raise
+
     return openFile
 
   ####################################################################
