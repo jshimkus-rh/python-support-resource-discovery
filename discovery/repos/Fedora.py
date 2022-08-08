@@ -42,8 +42,8 @@ class Fedora(Repository):
     repos = dict([ (key, value)
                       for (key, value) in repos.items()
                         if self._uri_contents(
-                          "{0}/Everything/{1}".format(value,
-                                                      architecture)) != "" ])
+                          "{0}/Everything/{1}"
+                            .format(value, architecture)) != self.uriError ])
     return repos
 
   ####################################################################
@@ -79,14 +79,18 @@ class Fedora(Repository):
     if path is not None:
       data = self._path_contents("{0}/".format(path))
 
-      # Find all the released versions greater than or equal to the Fedora
-      # minimum major (limited to no less than 28, Fedora 28 being the
-      # version first incorporating VDO).
-      regex = r"(?i)<a\s+href=\"(\d+)/\">\1/</a>"
-      roots = dict([
-        (x,  self._availableUri(path, x))
-          for x in filter(lambda x: int(x) >= self.__FEDORA_MINIMUM_MAJOR,
-                          re.findall(regex, data)) ])
+      if data == self.uriError:
+        roots = self.uriErrorRoot
+      else:
+        # Find all the released versions greater than or equal to the Fedora
+        # minimum major (limited to no less than 28, Fedora 28 being the
+        # version first incorporating VDO).
+        regex = r"(?i)<a\s+href=\"(\d+)/\">\1/</a>"
+        roots = dict([
+          (x,  self._availableUri(path, x))
+            for x in filter(lambda x: int(x) >= self.__FEDORA_MINIMUM_MAJOR,
+                            re.findall(regex, data)) ])
+
     return roots
 
   ####################################################################

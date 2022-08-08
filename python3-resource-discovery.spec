@@ -2,8 +2,8 @@
 %define repo_branch main
 
 %define name python3-%{repo_name}
-%define version 1.0.8
-%define unmangled_version 1.0.8
+%define version 1.0.9
+%define unmangled_version 1.0.9
 %define release 1
 
 Summary: %{name}
@@ -53,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Mon Aug 08 2022 Joe Shimkus <jshimkush@redhat.com> - 1.0.9-1
+- Distinguish between lack of repos and repo discovery errors.
+
 * Fri Aug 05 2022 Joe Shimkus <jshimkush@redhat.com> - 1.0.8-1
 - Re-raise exception on cache file open failure.
 

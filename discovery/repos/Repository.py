@@ -55,6 +55,12 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
   # Cached contents to avoid multiple requests for the same data.
   __cachedUriContents = {}
 
+  # Text indicating an error in retrieving URI contents.
+  uriError = "<<uriError>>"
+
+  # Dictionary saved to cache files if uri error.
+  uriErrorRoot = { uriError: uriError }
+
   ####################################################################
   # Public methods
   ####################################################################
@@ -299,9 +305,9 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
       else: # for
         # We log this at info level because some distributions don't
         # necessarily support all the architectures of potential interest.
-        log.info("retries exhausted; caching empty contents for {0}"
+        log.info("retries exhausted; caching uri error contents for {0}"
                   .format(uri))
-        self.__cachedUriContents[uri] = ""
+        self.__cachedUriContents[uri] = self.uriError
 
     return self.__cachedUriContents[uri]
 
@@ -453,8 +459,9 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
     #   - we've been explicitly told to or
     #   - its dependency is more recent than the file itself or
     #   - it's been more than the cache refresh time since it was updated or
-    #   - it contains no actual data; this is either because it's a newly
-    #     created file or the previous check most likely encountered an error
+    #   - it contains no actual data (i.e., it's zero size, indicating a newly
+    #     created file) or
+    #   - the contained data indicates an error occurred.
     forceScan = (forceScan
                   or ((dependencyMtime is not None)
                       and (dependencyMtime > stats.st_mtime))
@@ -463,7 +470,7 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
                   or (stats.st_size == 0))
     if not forceScan:
       roots = json.loads(openFile.read())
-      forceScan = len(roots) == 0
+      forceScan = self.uriError in roots
 
     if forceScan:
       log.info(logMessage)
