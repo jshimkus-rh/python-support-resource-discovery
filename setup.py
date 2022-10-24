@@ -38,10 +38,23 @@ console_scripts = ["{0} = {1}.{2}:{3}".format(versioned(subpackage["entry"]),
                                               subpackage["entry"])
                     for subpackage in subpackages]
 
+# Establish the installation requirements based on being invoked as part of
+# building an RPM.
+#
+# If building an RPM specifying installation requirements here results in
+# dependencies that are not met.  Working around this requires that the RPM
+# .spec file specifies dependencies itself.
+install_requires = ["{0} >= 1.0.0".format(python_prefixed("utility-mill"))]
+try:
+  os.environ["RPM_PACKAGE_NAME"]
+  install_requires = []
+except KeyError:
+  pass
+
 setup = functools.partial(
           setuptools.setup,
           name = python_prefixed(package_name),
-          version = "1.0.9",
+          version = "1.0.10",
           description = python_prefixed(package_name),
           author = "Joe Shimkus",
           author_email = "jshimkus@redhat.com",
@@ -49,8 +62,7 @@ setup = functools.partial(
           entry_points = {
             "console_scripts" : console_scripts
           },
-          install_requires = ["{0} >= 1.0.0"
-                                .format(python_prefixed("utility-mill"))],
+          install_requires = install_requires,
           zip_safe = False,
           classifiers = [
             "License :: OSI Approved :: GNU General Public License v2 (GPLv2)"
