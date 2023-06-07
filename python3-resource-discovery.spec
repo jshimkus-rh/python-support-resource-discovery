@@ -3,8 +3,8 @@
 %define repo_name python-support-resource-discovery
 %define repo_branch main
 
-%define version 1.0.10
-%define unmangled_version 1.0.10
+%define version 1.0.11
+%define unmangled_version 1.0.11
 %define release 1
 
 Name: python3-%{modname}

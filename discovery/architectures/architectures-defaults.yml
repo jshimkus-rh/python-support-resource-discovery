@@ -2,4 +2,6 @@
 # This file specifies the defaults that architectures will utilize.
 defaults:
   # The default architecture to use (case-insensitive).
+  # This default is used only if the architecture of the machine
+  # utilizing the architecture package is unknown to said package.
   architecture: x86_64
