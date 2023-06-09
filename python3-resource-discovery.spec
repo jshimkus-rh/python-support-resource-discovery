@@ -3,8 +3,8 @@
 %define repo_name python-support-resource-discovery
 %define repo_branch main
 
-%define version 1.0.11
-%define unmangled_version 1.0.11
+%define version 1.0.12
+%define unmangled_version 1.0.12
 %define release 1
 
 Name: python3-%{modname}
@@ -74,6 +74,12 @@ UNKNOWN
 %{python3_sitelib}/python3_resource_discovery-%{version}*
 
 %changelog
+* Fri Jun 09 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.12-1
+- Added an Architecture virtualization flag property.
+
+* Tue Jun 06 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.11-1
+- Changed default architecture to be that of the running machine.
+
 * Mon Oct 24 2022 Joe Shimkus <jshimkus@redhat.com> - 1.0.10-1
 - Changed package generation per Red Hat example.
 
