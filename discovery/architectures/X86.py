@@ -70,3 +70,8 @@ class X86_64(X86):
   def is64Bit(self):
     return True
 
+  ####################################################################
+  @property
+  def virtualizationFlag(self):
+    return "vmx"
+

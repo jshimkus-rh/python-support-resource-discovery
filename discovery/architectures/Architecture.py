@@ -46,6 +46,11 @@ class Architecture(factory.Factory, defaults.DefaultsFileInfo):
     return False
 
   ####################################################################
+  @property
+  def virtualizationFlag(self):
+    return None
+
+  ####################################################################
   # Overridden methods
   ####################################################################
   @classmethod
