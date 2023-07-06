@@ -38,7 +38,9 @@ class Fedora(Repository):
                     super(Fedora, self)._categoryReleased(architecture))
 
   ####################################################################
-  def _filterNonExistentArchitecture(self, repos, architecture):
+  def _filterRepos(self, repos, architecture):
+    repos = super(Fedora, self)._filterRepos(repos, architecture)
+
     repos = dict([ (key, value)
                       for (key, value) in repos.items()
                         if self._uri_contents(
