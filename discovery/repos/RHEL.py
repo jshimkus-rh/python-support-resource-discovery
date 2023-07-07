@@ -20,7 +20,9 @@ class RHEL(Repository):
   ####################################################################
   # Overridden methods
   ####################################################################
-  def _filterNonExistentArchitecture(self, repos, architecture):
+  def _filterRepos(self, repos, architecture):
+    repos = super(RHEL, self)._filterRepos(repos, architecture)
+
     regex = re.compile(r"(?i)<a\s+href=\"({0}/)\">\1</a>".format(architecture))
 
     return dict([ (key, value)

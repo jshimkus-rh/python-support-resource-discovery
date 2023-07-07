@@ -3,8 +3,8 @@
 %define repo_name python-support-resource-discovery
 %define repo_branch main
 
-%define version 1.0.12
-%define unmangled_version 1.0.12
+%define version 1.0.13
+%define unmangled_version 1.0.13
 %define release 1
 
 Name: python3-%{modname}
@@ -74,6 +74,9 @@ UNKNOWN
 %{python3_sitelib}/python3_resource_discovery-%{version}*
 
 %changelog
+* Thu Jul 06 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.13-1
+- Fixed handling of URI errors as input to repo filtering.
+
 * Fri Jun 09 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.12-1
 - Added an Architecture virtualization flag property.
 

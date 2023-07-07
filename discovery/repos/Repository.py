@@ -138,7 +138,7 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
     return self.__privateAvailableRoots(self._categoryLatest(architecture),
                                         architecture,
                                         functools.partial(
-                                          self. _filterNonExistentArchitecture,
+                                          self. _filterRepos,
                                           self._agnosticLatest(architecture),
                                           architecture))
 
@@ -147,7 +147,7 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
     return self.__privateAvailableRoots(self._categoryNightly(architecture),
                                         architecture,
                                         functools.partial(
-                                          self. _filterNonExistentArchitecture,
+                                          self. _filterRepos,
                                           self._agnosticNightly(architecture),
                                           architecture))
 
@@ -156,7 +156,7 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
     return self.__privateAvailableRoots(self._categoryReleased(architecture),
                                         architecture,
                                         functools.partial(
-                                          self. _filterNonExistentArchitecture,
+                                          self. _filterRepos,
                                           self._agnosticReleased(architecture),
                                           architecture))
 
@@ -214,11 +214,17 @@ class Repository(factory.Factory, defaults.DefaultsFileInfo):
     return argparse.Namespace(forceScan = False)
 
   ####################################################################
-  def _filterNonExistentArchitecture(self, repos, architecture):
+  def _filterRepos(self, repos, architecture = None):
     """Filters out the repos that don't have a subdir for the
     specified archtecture returning only those that do.
+
+    Subclasses need to override this to account for their unique
+    organization of repositories but must also call this first to
+    remove any contents that indicate an error in retrieval.
     """
-    raise NotImplementedError
+    repos = dict([ (key, value) for (key, value) in repos.items()
+                                if key != self.uriError ])
+    return repos
 
   ####################################################################
   def _findAgnosticLatestRoots(self, architecture):
