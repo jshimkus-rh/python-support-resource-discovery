@@ -1,0 +1,13 @@
+---
+# The contents of a Config file are formatted in the same way as that of a
+# Defaults file with the change that the top-level key must be 'config'.
+
+# This meta config file's parameters are utilized only at package (setuptools)
+# creation.
+config:
+  # List of classifiers for multi-package.
+  classifiers:
+    - "License :: OSI Approved :: GNU General Public License v2 (GPLv2)"
+
+  # License file for multi-package.
+  license-file: "discovery/LICENSE.txt"

@@ -5,7 +5,7 @@
 
 %define version 1.0.13
 %define unmangled_version 1.0.13
-%define release 1
+%define release 2
 
 Name: python3-%{modname}
 Version: %{version}
@@ -74,6 +74,9 @@ UNKNOWN
 %{python3_sitelib}/python3_resource_discovery-%{version}*
 
 %changelog
+* Wed Jul 19 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.13-2
+- Changed build setup per template.
+
 * Thu Jul 06 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.13-1
 - Fixed handling of URI errors as input to repo filtering.
 
