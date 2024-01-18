@@ -521,8 +521,8 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
   ####################################################################
   # Protected instance-behavior methods
   ####################################################################
-  def _distroDefault(self, sourceDictionary):
-    """The input dictionary is dual-level structured akin to
+  def _distroDefault(self, intermediate):
+    """The input intermediate represents a dual-level structured akin to
 
       default: <default value>
       fedora2\d$:
@@ -536,25 +536,26 @@ class Distribution(factory.Factory, defaults.DefaultsFileInfo):
     specific prefix.
     """
     regexMatches = list(filter(lambda x: re.match(x, self.name()) is not None,
-                               sourceDictionary.keys()))
+                               intermediate.keys))
     if len(regexMatches) > 1:
       raise defaults.DefaultsFileFormatException(
                                                 "multiple regex matches found")
 
     default = None
     if len(regexMatches) == 0:
-      default = self.defaults(["default"], sourceDictionary)
+      default = self.defaults(["default"], intermediate)
     else:
       distroMatches = list(
-                        filter(lambda x: re.match(x, self.name()) is not None,
-                               sourceDictionary[regexMatches[0]].keys()))
+                filter(lambda x: re.match(x, self.name()) is not None,
+                       intermediate[regexMatches[0]].keys))
       if len(distroMatches) > 1:
         raise defaults.DefaultsFileFormatException(
                                         "multiple distribution matches found")
       if len(distroMatches) == 0:
-        default = self.defaults(["default"], sourceDictionary[regexMatches[0]])
+        default = self.defaults(["default"],
+                                intermediate[regexMatches[0]])
       else:
-        default = sourceDictionary[regexMatches[0]][distroMatches[0]]
+        default = intermediate[regexMatches[0]][distroMatches[0]]
 
     return default
 

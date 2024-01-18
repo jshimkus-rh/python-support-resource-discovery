@@ -8,7 +8,7 @@ import sys
 import yaml
 
 # package_version and the rpm .spec version are to be kept in sync.
-package_version = {"major": 1, "minor": 0, "patch": 13, "release": 2}
+package_version = {"major": 1, "minor": 0, "patch": 13, "release": 3}
 package_name = "resource-discovery"
 # Subdirectory containg packages.
 package_subdir = "discovery"
@@ -48,7 +48,7 @@ def versioned(src):
 # If building an RPM specifying installation requirements here results in
 # dependencies that are not met.  Working around this requires that the RPM
 # .spec file specifies dependencies itself.
-install_requires = ["{0} >= 1.0.0".format(python_prefixed("utility-mill"))]
+install_requires = ["{0} >= 1.1".format(python_prefixed("utility-mill"))]
 try:
   os.environ["RPM_PACKAGE_NAME"]
   install_requires = []

@@ -5,7 +5,7 @@
 
 %define version 1.0.13
 %define unmangled_version 1.0.13
-%define release 2
+%define release 3
 
 Name: python3-%{modname}
 Version: %{version}
@@ -39,7 +39,7 @@ BuildRequires: python3-pyyaml
 %endif
 
 # Runtime requirements.
-Requires: python3-utility-mill >= 1
+Requires: python3-utility-mill >= 1.1
 %if 0%{?rhel} && 0%{?rhel} < 9
 Requires: python39
 Requires: python39-pyyaml
@@ -74,6 +74,9 @@ UNKNOWN
 %{python3_sitelib}/python3_resource_discovery-%{version}*
 
 %changelog
+* Thu Jan 18 2024 Joe Shimkus <jshimkus@redhat.com> - 1.0.13-3
+- Updated to require utility mill 1.1.
+
 * Wed Jul 19 2023 Joe Shimkus <jshimkus@redhat.com> - 1.0.13-2
 - Changed build setup per template.
 
